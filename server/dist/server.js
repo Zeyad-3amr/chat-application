@@ -44,7 +44,7 @@ const io = new socketio.Server(server, {
 });
 io.on('connection', (socket) => {
     console.log('USER Connected : ', socket.id);
-    // socket.join('');
+    socket.join('');
     socket.on('send_message', (data) => {
         const message = data.message;
         socket.to(data.room).emit('receive_message', message);
