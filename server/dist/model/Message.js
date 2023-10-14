@@ -31,6 +31,10 @@ const messageSchema = new mongoose_1.Schema({
     user: {
         type: mongoose_1.default.Schema.ObjectId,
     },
+    createdAt: {
+        type: Date,
+        default: Date.now(),
+    },
 });
 const Message = mongoose_1.default.model('messages', messageSchema);
 exports.default = Message;

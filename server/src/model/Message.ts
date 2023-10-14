@@ -3,6 +3,7 @@ import mongoose, { Schema } from 'mongoose';
 interface IMessage {
   text: string;
   user: mongoose.Schema.Types.ObjectId;
+  createdAt: Date;
 }
 
 const messageSchema = new Schema<IMessage>({
@@ -11,6 +12,10 @@ const messageSchema = new Schema<IMessage>({
   },
   user: {
     type: mongoose.Schema.ObjectId,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
   },
 });
 

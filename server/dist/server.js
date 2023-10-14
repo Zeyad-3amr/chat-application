@@ -30,24 +30,26 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const http = __importStar(require("http"));
 const app_1 = __importDefault(require("./app"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const socketio = __importStar(require("socket.io"));
 const port = 8000;
 dotenv_1.default.config();
 const mongoDB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
 const server = http.createServer(app_1.default);
 mongoose_1.default.connect(mongoDB).then(() => console.log('DB connection successfull !'));
-// const io: socketio.Server = new socketio.Server(server, {
-//   cors: {
-//     origin: 'http://localhost:3000',
-//     methods: ['GET', 'POST'],
-//   },
-// });
-// io.on('connection', (socket) => {
-//   console.log('USER Connected : ', socket.id);
-//   socket.on('send_message', (data) => {
-//     const message: string = data.message;
-//     io.emit('receive_message', message);
-//   });
-// });
+const io = new socketio.Server(server, {
+    cors: {
+        origin: 'http://localhost:3000',
+        methods: ['GET', 'POST'],
+    },
+});
+io.on('connection', (socket) => {
+    console.log('USER Connected : ', socket.id);
+    // socket.join('');
+    socket.on('send_message', (data) => {
+        const message = data.message;
+        socket.to(data.room).emit('receive_message', message);
+    });
+});
 server.listen(port, () => {
     console.log(`App running on port ${port}...`);
 });

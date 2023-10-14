@@ -1,11 +1,13 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import validator from 'validator';
+import bcrypt from 'bcrypt';
 
-interface IUser extends Document {
+export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword: string | undefined;
+  correctPassword: Function;
 }
 const userSchema = new Schema<IUser>({
   name: {
@@ -35,5 +37,16 @@ const userSchema = new Schema<IUser>({
     },
   },
 });
+
+userSchema.pre('save', async function (this: IUser, next) {
+  this.password = await bcrypt.hash(this.password, 12);
+  this.confirmPassword = undefined;
+  next();
+});
+
+userSchema.methods.correctPassword = async (enteredPass: string, storedPass: string) => {
+  return await bcrypt.compare(enteredPass, storedPass);
+};
+
 const User = mongoose.model('users', userSchema);
 export default User;
