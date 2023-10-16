@@ -1,10 +1,19 @@
 .container {
   width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  /* flex-direction: column-reverse; */
 }
+
 .messageContainer {
-  margin: 1rem 0 1rem 0;
+  display: flex;
+  margin-bottom: 1rem;
   background-color: rgb(41, 138, 105);
   width: 30%;
   padding: 1rem;
   border-radius: 1rem;
+  align-self: flex-end;
+}
+.text {
+  word-break: break-word;
 }
