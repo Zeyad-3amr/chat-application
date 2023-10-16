@@ -4,17 +4,26 @@
   width: 100%;
   border-left-style: solid;
   border-width: thin;
-  border-color: grey;
+  border-color: rgb(0, 0, 0);
   padding: 1rem;
   gap: 1rem;
+  /* max-height: 100vh; */
 }
 
 .chatBody {
   border-radius: 1rem;
-  background-color: #364044;
+  /* background-color: #364044; */
+  background-color: rgba(161, 161, 161, 0.2);
+
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  overflow-y: scroll;
   height: 75vh;
+  scrollbar-width: thin;
+}
+
+/* Hide scrollbar for Webkit/Blink */
+.chatBody::-webkit-scrollbar {
+  width: 6px; /* width of the scrollbar */
 }

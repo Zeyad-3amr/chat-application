@@ -1,7 +1,7 @@
 .header {
   display: flex;
   flex-direction: column;
-  background-color: #364044;
+  background-color: rgba(161, 161, 161, 0.2);
   border-radius: 1rem;
   padding: 0.5rem;
 }

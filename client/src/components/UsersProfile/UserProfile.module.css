@@ -8,14 +8,16 @@
   gap: 1rem;
   width: 100%;
   padding: 1rem;
-  border-bottom-style: solid;
-  border-width: thin;
-  border-color: grey;
+
+  background-color: rgba(161, 161, 161, 0.2);
+  border-radius: 1rem;
+
   &:hover {
-    background-color: rgb(112, 112, 112, 0.2);
+    background-color: rgba(173, 173, 173, 0.259);
     transition: 0.2s;
     cursor: pointer;
     border-radius: 1rem;
+    border-bottom-right-radius: 0rem;
   }
   transition: ease-out 0.2s;
 }
