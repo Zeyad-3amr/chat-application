@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import classes from './ChatRoom.module.css';
 import { Header } from './Header/Header';
-import { Sender } from './Sender/Sender';
+import { Message } from './Message/Message';
 
 export interface ChatRoomProps {}
 
@@ -10,21 +10,18 @@ export const ChatRoom: FC<ChatRoomProps> = (props) => {
     <div className={classes.container}>
       <Header />
       <div className={classes.chatBody}>
-        <Sender text={'Hello'} />
-        <Sender text={'Bye'} />
-        <Sender text={'easy'} />
-        <Sender text={'easy'} />
-        <Sender text={'easy'} />
-        <Sender text={'easy'} />
-        <Sender text={'easy'} />
-        <Sender text={'easy'} />
-        <Sender text={'easy'} />
-        <Sender text={'easy'} />
-        <Sender text={'easy'} />
-        <Sender text={'easy'} />
-        <Sender text={'easy'} />
-        <Sender text={'easy'} />
-        <Sender text={'easy'} />
+        <Message text={'Hello'} messageType={true} />
+        <Message text={'Bye'} messageType={false} />
+        <Message text={'Hello'} messageType={true} />
+        <Message text={'Bye'} messageType={false} />
+        <Message text={'Hello'} messageType={true} />
+        <Message text={'Bye'} messageType={false} />
+        <Message text={'Hello'} messageType={true} />
+        <Message text={'Bye'} messageType={false} />
+        <Message text={'Hello'} messageType={true} />
+        <Message text={'Bye'} messageType={false} />
+        <Message text={'Bye'} messageType={false} />
+        <Message text={'Bye'} messageType={false} />
       </div>
     </div>
   );

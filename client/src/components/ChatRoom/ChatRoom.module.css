@@ -14,7 +14,7 @@
   background-color: #364044;
   padding: 1rem;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   overflow-y: auto;
-  max-height: 75vh;
+  height: 75vh;
 }
