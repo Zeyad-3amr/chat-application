@@ -9,6 +9,7 @@ export const LeftNav: FC<LeftNavProps> = () => {
     <div className={classes.leftNav}>
       <UserProfile />
       <UserProfile />
+
       <UserProfile />
     </div>
   );

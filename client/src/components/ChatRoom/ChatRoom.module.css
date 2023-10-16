@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-left-style: solid;
+  border-width: thin;
+  border-color: grey;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.chatBody {
+  border-radius: 1rem;
+  background-color: #364044;
+  padding: 1rem;
+  height: 80%;
+}

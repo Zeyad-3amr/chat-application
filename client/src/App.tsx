@@ -1,19 +1,28 @@
 import React from 'react';
-import { LeftNav } from './components/LeftNav/LeftNav';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { LeftNavLayout } from './components/LeftNavLayout/LeftNavLayout';
-
+import { WelcomeScreen } from './components/WelcomeScreen/WelcomeScreen';
+import classes from './App.module.css';
+import { ChatRoom } from './components/ChatRoom/ChatRoom';
 const router = createBrowserRouter([
   {
-    path: '/',
     element: <LeftNavLayout />,
-    children: [<LeftNav />],
+    children: [
+      // {
+      //   path: '/',
+      //   element: <WelcomeScreen />,
+      // },
+      {
+        path: '/',
+        element: <ChatRoom />,
+      },
+    ],
   },
 ]);
 
 const App: React.FC = () => {
   return (
-    <div>
+    <div className={classes.app}>
       <RouterProvider router={router} />
     </div>
   );

@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  background-color: #364044;
+  border-radius: 1rem;
+  padding: 0.5rem;
+}
+.username {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.status {
+  color: rgb(168, 149, 149);
+}
