@@ -24,6 +24,8 @@ export const ChatRoom: FC<ChatRoomProps> = () => {
         <Message text={'No iam going to watch barbie'} messageType={false} />
 
         <Message text={'Very bad decision'} messageType={true} />
+        <Message text={'Please come with me to oppenhimer'} messageType={true} />
+        <Message text={'Okay i will'} messageType={false} />
       </div>
       <TypeField />
     </div>
