@@ -54,8 +54,8 @@ export const signup: RequestHandler = catchAsync(
       password: req.body.password,
       confirmPassword: req.body.confirmPassword,
     });
+    console.log(req.body);
 
-    console.log(newUser);
     createSendToken(newUser, 201, req, res);
   }
 );
@@ -100,8 +100,6 @@ export const protect: RequestHandler = catchAsync(
     }
 
     // 2) Verify Token
-
-    // const decoded = await verify(token, process.env.JWT_SECRET);
 
     const decoded = (await jwtVerifyPromisified(
       token,

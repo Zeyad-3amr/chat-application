@@ -27,11 +27,11 @@ const io: socketio.Server = new socketio.Server(server, {
 io.on('connection', (socket) => {
   console.log('USER Connected : ', socket.id);
 
-  socket.join('');
-
   socket.on('send_message', (data) => {
     const message: string = data.message;
-    socket.to(data.room).emit('receive_message', message);
+    console.log(message);
+
+    socket.broadcast.emit('receive_message', data.message);
   });
 });
 

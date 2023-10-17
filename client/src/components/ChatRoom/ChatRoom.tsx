@@ -1,33 +1,51 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import classes from './ChatRoom.module.css';
 import { Header } from './Header/Header';
 import { Message } from './Message/Message';
 import { TypeField } from './TypeField/TypeField';
+import io from 'socket.io-client';
 
 export interface ChatRoomProps {}
 
+const socket = io('http://localhost:8000');
+
 export const ChatRoom: FC<ChatRoomProps> = () => {
+  const [message, setMessage] = useState('');
+  const [messagesArray, setMessagesArray] = useState<
+    { message: string; type: boolean }[]
+  >([]);
+
+  // const [messageType,setMessageType]
+
+  const sendMessageHandler = () => {
+    if (message === '') return;
+
+    socket.emit('send_message', { message });
+    setMessagesArray((prev) => [...prev, { message, type: true }]);
+    console.log(message);
+  };
+
+  useEffect(() => {
+    socket.on('receive_message', (data: string) => {
+      console.log(data);
+      setMessagesArray((prev) => [...prev, { message: data, type: false }]);
+    });
+  }, [socket]);
+
   return (
     <div className={classes.container}>
       <Header />
       <div className={classes.chatBody}>
-        <Message text={'Hello'} messageType={true} />
-        <Message text={'Bye'} messageType={false} />
-        <Message text={'Hello'} messageType={true} />
-
-        <Message
-          text={'oppenhimer is going to be a good movie  bal balaas '}
-          messageType={false}
-        />
-        <Message text={'Bye'} messageType={false} />
-        <Message text={'Are you going to watch oppenhimer'} messageType={true} />
-        <Message text={'No iam going to watch barbie'} messageType={false} />
-
-        <Message text={'Very bad decision'} messageType={true} />
-        <Message text={'Please come with me to oppenhimer'} messageType={true} />
-        <Message text={'Okay i will'} messageType={false} />
+        {messagesArray.map((el) => (
+          <Message text={el.message} messageType={el.type} />
+        ))}
       </div>
-      <TypeField />
+
+      <TypeField
+        setMessage={setMessage}
+        message={message}
+        sendMessageHandler={sendMessageHandler}
+      />
     </div>
   );
 };

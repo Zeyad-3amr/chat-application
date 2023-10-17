@@ -1,7 +1,7 @@
 .header {
   display: flex;
   flex-direction: column;
-  background-color: rgba(161, 161, 161, 0.2);
+  background-color: #000000c7;
   border-radius: 1rem;
   padding: 0.5rem;
 }
@@ -11,5 +11,5 @@
   font-weight: bold;
 }
 .status {
-  color: rgb(168, 149, 149);
+  color: rgb(150, 150, 150);
 }

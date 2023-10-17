@@ -1,19 +1,30 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import classes from './TypeField.module.css';
 import { TextareaAutosize } from '@mui/material';
 
-export interface TypeFieldProps {}
+export interface TypeFieldProps {
+  message: string;
+  setMessage: React.Dispatch<React.SetStateAction<string>>;
+  sendMessageHandler: VoidFunction;
+}
 
-export const TypeField: FC<TypeFieldProps> = (props) => {
+export const TypeField: FC<TypeFieldProps> = ({ setMessage, sendMessageHandler }) => {
+  const messageHandler = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    setMessage(e.currentTarget.value);
+  };
+
   return (
     <div className={classes.container}>
       <TextareaAutosize
         className={classes.typeArea}
         placeholder="Type a message"
         maxRows={3}
+        onChange={messageHandler}
       />
 
-      <button className={classes.Send}>Send</button>
+      <button className={classes.Send} onClick={sendMessageHandler}>
+        Send
+      </button>
     </div>
   );
 };

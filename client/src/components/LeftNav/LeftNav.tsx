@@ -13,14 +13,6 @@ export const LeftNav: FC<LeftNavProps> = () => {
         <UserProfile />
         <UserProfile />
         <UserProfile />
-        <UserProfile />
-        <UserProfile />
-        <UserProfile />
-        <UserProfile />
-        <UserProfile />
-        <UserProfile />
-        <UserProfile />
-        <UserProfile />
       </div>
     </div>
   );

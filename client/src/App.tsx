@@ -4,14 +4,16 @@ import { LeftNavLayout } from './components/LeftNavLayout/LeftNavLayout';
 import { WelcomeScreen } from './components/WelcomeScreen/WelcomeScreen';
 import classes from './App.module.css';
 import { ChatRoom } from './components/ChatRoom/ChatRoom';
+import { io } from 'socket.io-client';
+
 const router = createBrowserRouter([
   {
     element: <LeftNavLayout />,
     children: [
-      // {
-      //   path: '/',
-      //   element: <WelcomeScreen />,
-      // },
+      {
+        path: '/welcome',
+        element: <WelcomeScreen />,
+      },
       {
         path: '/',
         element: <ChatRoom />,

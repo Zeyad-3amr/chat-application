@@ -29,8 +29,6 @@ const userSchema = new Schema<IUser>({
     required: [true, 'please confirm your password'],
     validate: {
       validator: function (this: IUser, el: string) {
-        console.log(this);
-
         return el === this.password;
       },
       message: 'passwords are not the same',

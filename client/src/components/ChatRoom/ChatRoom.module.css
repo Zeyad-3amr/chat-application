@@ -12,13 +12,13 @@
 
 .chatBody {
   border-radius: 1rem;
-  /* background-color: #364044; */
-  background-color: rgba(161, 161, 161, 0.2);
+  background-color: #000000c7;
+  /* background-color: rgba(161, 161, 161, 0.2); */
 
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 75vh;
   scrollbar-width: thin;
 }
