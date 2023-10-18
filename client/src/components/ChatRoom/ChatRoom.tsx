@@ -15,8 +15,6 @@ export const ChatRoom: FC<ChatRoomProps> = () => {
     { message: string; type: boolean }[]
   >([]);
 
-  // const [messageType,setMessageType]
-
   const sendMessageHandler = () => {
     if (message === '') return;
 

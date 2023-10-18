@@ -48,13 +48,14 @@ const createSendToken = (
 
 export const signup: RequestHandler = catchAsync(
   async (req: CustomRequest<SignupBody>, res, next) => {
-    const newUser: {} = await User.create({
+    const newUser: IUser = await User.create({
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
       confirmPassword: req.body.confirmPassword,
     });
-    console.log(req.body);
+
+    console.log(newUser);
 
     createSendToken(newUser, 201, req, res);
   }

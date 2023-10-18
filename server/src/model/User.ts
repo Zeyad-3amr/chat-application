@@ -36,9 +36,11 @@ const userSchema = new Schema<IUser>({
   },
 });
 
-userSchema.pre('save', async function (this: IUser, next) {
+userSchema.pre<IUser>('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 12);
+
   this.confirmPassword = undefined;
+
   next();
 });
 

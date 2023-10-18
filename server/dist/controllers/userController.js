@@ -37,7 +37,7 @@ exports.signup = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
         password: req.body.password,
         confirmPassword: req.body.confirmPassword,
     });
-    console.log(req.body);
+    console.log(newUser);
     createSendToken(newUser, 201, req, res);
 });
 exports.login = (0, catchAsync_1.catchAsync)(async (req, res, next) => {

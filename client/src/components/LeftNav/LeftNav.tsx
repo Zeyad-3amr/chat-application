@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import classes from './LeftNav.module.css';
 import { UserProfile } from '../UsersProfile/UserProfile';
+import { Link } from 'react-router-dom';
 export interface LeftNavProps {}
 
 export const LeftNav: FC<LeftNavProps> = () => {
@@ -10,9 +11,15 @@ export const LeftNav: FC<LeftNavProps> = () => {
         <h1>Chats 📨</h1>
       </div>
       <div className={classes.leftNav}>
-        <UserProfile />
-        <UserProfile />
-        <UserProfile />
+        <Link className={classes.link} to="/">
+          <UserProfile />
+        </Link>
+        <Link className={classes.link} to="/">
+          <UserProfile />
+        </Link>
+        <Link className={classes.link} to="/">
+          <UserProfile />
+        </Link>
       </div>
     </div>
   );
