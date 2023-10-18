@@ -2,30 +2,22 @@ import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { LeftNavLayout } from './components/LeftNavLayout/LeftNavLayout';
 import { WelcomeScreen } from './components/WelcomeScreen/WelcomeScreen';
-import classes from './App.module.css';
 import { ChatRoom } from './components/ChatRoom/ChatRoom';
 import { io } from 'socket.io-client';
-
-const router = createBrowserRouter([
-  {
-    element: <LeftNavLayout />,
-    children: [
-      {
-        path: '/welcome',
-        element: <WelcomeScreen />,
-      },
-      {
-        path: '/',
-        element: <ChatRoom />,
-      },
-    ],
-  },
-]);
+import { Routes, Route } from 'react-router-dom';
+import { SignIn } from './components/SignIn/SignIn';
 
 const App: React.FC = () => {
   return (
-    <div className={classes.app}>
-      <RouterProvider router={router} />
+    <div>
+      <Routes>
+        <Route path="/sign-in" element={<SignIn />} />
+        {/* <Route path="/signin" element={<SignIn />} /> */}
+        <Route element={<LeftNavLayout />}>
+          <Route path="/" element={<WelcomeScreen />} />
+          <Route path="/page" element={<ChatRoom />} />
+        </Route>
+      </Routes>
     </div>
   );
 };

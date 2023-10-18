@@ -11,13 +11,13 @@ export const LeftNav: FC<LeftNavProps> = () => {
         <h1>Chats 📨</h1>
       </div>
       <div className={classes.leftNav}>
-        <Link className={classes.link} to="/">
+        <Link className={classes.link} to="/page">
           <UserProfile />
         </Link>
-        <Link className={classes.link} to="/">
+        <Link className={classes.link} to="/page">
           <UserProfile />
         </Link>
-        <Link className={classes.link} to="/">
+        <Link className={classes.link} to="/page">
           <UserProfile />
         </Link>
       </div>
