@@ -10,10 +10,21 @@
   width: 80%;
   display: flex;
   justify-content: center;
+  align-items: center;
   border-bottom-style: solid;
   border-width: thin;
-  border-color: grey;
+  border-color: rgba(0, 255, 208, 0.837);
 }
+
+.header {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.header path {
+  color: rgba(0, 255, 208, 0.837);
+}
+
 h1 {
   color: white;
 }

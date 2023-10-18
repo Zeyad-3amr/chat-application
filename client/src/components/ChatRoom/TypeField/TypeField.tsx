@@ -9,7 +9,7 @@ export interface TypeFieldProps {
 }
 
 export const TypeField: FC<TypeFieldProps> = ({ setMessage, sendMessageHandler }) => {
-  const messageHandler = (e: React.FormEvent<HTMLTextAreaElement>) => {
+  const messageHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.currentTarget.value);
   };
 

@@ -8,12 +8,25 @@
   border-left-style: solid;
   border-width: thin;
   border-color: rgb(0, 0, 0);
+  flex-direction: column;
 }
+.header {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.header path {
+  color: rgba(0, 255, 208, 0.837);
+}
+
 .page {
   /* display: flex; */
   padding: 1rem;
   /* justify-content: center; */
 }
-h1 {
+h1,
+h2 {
   color: white;
 }

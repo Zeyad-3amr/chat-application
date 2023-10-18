@@ -11,14 +11,18 @@
 .messageSender,
 .messageReceiver {
   margin-bottom: 1rem;
-  background-color: rgba(70, 249, 255, 0.782);
+  background-color: rgba(0, 255, 208, 0.837);
   max-width: 60%;
   padding: 1rem;
   border-radius: 1rem;
 }
 .messageSender {
   border-bottom-right-radius: 0rem;
+  .text {
+    color: rgb(0, 0, 0);
+  }
 }
+
 .messageReceiver {
   background-color: rgba(85, 85, 85, 0.875);
   color: aliceblue;
