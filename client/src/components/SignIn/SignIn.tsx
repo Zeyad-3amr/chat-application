@@ -1,17 +1,22 @@
 import { FC, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import classes from './SignIn.module.css';
 import { Link } from 'react-router-dom';
 import { RiChatSmileFill } from 'react-icons/ri';
 import instance from '../../instance';
-// import { typographyClasses } from '@mui/material';
+import { useUserIdStore } from '../../store/userStorage';
+import { LinearProgress } from '@mui/material';
 export interface SignInProps {}
 
 export const SignIn: FC<SignInProps> = (props) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isError, setIsError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const data = { email: '', password: '' };
+  const setUser = useUserIdStore((state) => state.setUser);
 
   const emailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsError(false);
@@ -29,16 +34,23 @@ export const SignIn: FC<SignInProps> = (props) => {
       setErrorMsg('Please provide email or password !');
       return;
     }
-    data.email = email;
-    data.password = password;
-    const res = await instance.post('/user/login', data);
-    const { user } = res.data.data;
-    console.log(user);
-    // console.log(data);
-    //   try {
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      setIsLoading(true);
+      data.email = email;
+      data.password = password;
+      const res = await instance.post('/user/login', data);
+      if (res.data.status === 'success') {
+        setIsLoading(false);
+        navigate('/', { replace: true });
+      }
+      const { user } = res.data.data;
+      setUser(user);
+    } catch (err: any) {
+      console.log(err.response.data.message);
+      setIsLoading(false);
+      setIsError(true);
+      setErrorMsg(err.response.data.message);
+    }
   };
 
   return (
@@ -47,6 +59,11 @@ export const SignIn: FC<SignInProps> = (props) => {
         <h1> Welcome To Chatify </h1>
         <RiChatSmileFill size={50} />
       </div>
+      {isLoading && (
+        <div className={classes.loading}>
+          <LinearProgress color="inherit" />
+        </div>
+      )}
 
       <div className={classes.inputs}>
         <input

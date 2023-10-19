@@ -63,3 +63,9 @@
   }
   transition: ease-out 0.2s;
 }
+.errorMsg {
+  background-color: rgba(255, 0, 0, 0.73);
+  padding: 0.8rem;
+  border-radius: 5rem;
+  border-bottom-left-radius: 0rem;
+}

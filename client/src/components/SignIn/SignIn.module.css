@@ -84,3 +84,11 @@ p {
   border-radius: 5rem;
   border-bottom-left-radius: 0rem;
 }
+
+.loading {
+  width: 50%;
+}
+
+.loading span {
+  color: rgba(93, 255, 228, 0.837);
+}

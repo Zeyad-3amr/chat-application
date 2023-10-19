@@ -32,6 +32,11 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const userSchema = new mongoose_1.Schema({
     name: {
         type: String,
+        required: [true, 'user must have name!'],
+    },
+    userName: {
+        type: String,
+        unique: true,
         required: [true, 'user must have username!'],
     },
     email: {

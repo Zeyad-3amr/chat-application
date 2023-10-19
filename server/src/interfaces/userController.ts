@@ -3,6 +3,7 @@ import { IUser } from '../model/User';
 
 export interface SignupBody {
   name: string;
+  userName: string;
   email: string;
   password: string;
   confirmPassword: string;

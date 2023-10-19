@@ -10,6 +10,7 @@ const userRoutes_1 = require("./routes/userRoutes");
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const errorController_1 = __importDefault(require("./controllers/errorController"));
 const messageRoutes_1 = require("./routes/messageRoutes");
+const roomRoutes_1 = require("./routes/roomRoutes");
 const app = (0, express_1.default)();
 app.enable('trust proxy');
 app.use((0, cors_1.default)({
@@ -22,5 +23,6 @@ app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use('/api/chat-application/user', userRoutes_1.router);
 app.use('/api/chat-application/message', messageRoutes_1.router);
+app.use('/api/chat-application/room', roomRoutes_1.router);
 app.use(errorController_1.default);
 exports.default = app;

@@ -50,6 +50,7 @@ export const signup: RequestHandler = catchAsync(
   async (req: CustomRequest<SignupBody>, res, next) => {
     const newUser: IUser = await User.create({
       name: req.body.name,
+      userName: req.body.userName,
       email: req.body.email,
       password: req.body.password,
       confirmPassword: req.body.confirmPassword,
@@ -117,5 +118,17 @@ export const protect: RequestHandler = catchAsync(
     req.user = currentUser;
 
     next();
+  }
+);
+
+export const getAllUsers: RequestHandler = catchAsync(
+  async (req: CustomRequest, res: Response, next) => {
+    const users = await User.find({ _id: { $ne: req.user?.id } }).select(
+      '-password -__v'
+    );
+    res.status(200).json({
+      status: 'success',
+      data: users,
+    });
   }
 );

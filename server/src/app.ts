@@ -3,9 +3,10 @@ import cors from 'cors';
 import morgan from 'morgan';
 import { router as userRouter } from './routes/userRoutes';
 import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
 import errorHandler from './controllers/errorController';
 import { router as messageRouter } from './routes/messageRoutes';
+import { router as roomRouter } from './routes/roomRoutes';
+
 const app = express();
 
 app.enable('trust proxy');
@@ -25,6 +26,7 @@ app.use(cookieParser());
 
 app.use('/api/chat-application/user', userRouter);
 app.use('/api/chat-application/message', messageRouter);
+app.use('/api/chat-application/room', roomRouter);
 
 app.use(errorHandler);
 
