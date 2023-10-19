@@ -33,8 +33,19 @@ const roomSchema = new mongoose_1.Schema({
     ],
     messages: [
         {
-            type: mongoose_1.default.Schema.ObjectId,
-            ref: 'messages',
+            text: String,
+            from: {
+                type: mongoose_1.default.Schema.ObjectId,
+                ref: 'users',
+            },
+            to: {
+                type: mongoose_1.default.Schema.ObjectId,
+                ref: 'users',
+            },
+            createdAt: {
+                type: Date,
+                default: Date.now(),
+            },
         },
     ],
 });

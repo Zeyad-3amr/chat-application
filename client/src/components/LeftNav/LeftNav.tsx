@@ -14,7 +14,7 @@ export const LeftNav: FC<LeftNavProps> = () => {
 
   useEffect(() => {
     const fetchAllUsers = async () => {
-      const res = await instance('/user/getAllUsers');
+      const res = await instance.get('/user/getAllUsers');
       setAllUsers(res.data.data);
     };
     fetchAllUsers();
@@ -29,7 +29,7 @@ export const LeftNav: FC<LeftNavProps> = () => {
       </div>
       <div className={classes.leftNav}>
         {allUsers.map((user) => (
-          <Link className={classes.link} to={`/${user.userName}  `}>
+          <Link key={user._id} className={classes.link} to={`/${user.userName}  `}>
             <UserProfile name={user.name} />
           </Link>
         ))}

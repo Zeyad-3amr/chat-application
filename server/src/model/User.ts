@@ -29,6 +29,7 @@ const userSchema = new Schema<IUser>({
   password: {
     type: String,
     required: [true, 'user must have password!'],
+    select: false,
   },
   confirmPassword: {
     type: String,

@@ -1,8 +1,15 @@
 import mongoose, { Schema, SchemaType } from 'mongoose';
 
+interface IMessage {
+  text: string;
+  from: mongoose.Schema.Types.ObjectId;
+  to: mongoose.Schema.Types.ObjectId;
+  createdAt: Date;
+}
+
 interface IRoom {
   users: string[];
-  messages: string[];
+  messages: IMessage[];
 }
 
 const roomSchema = new Schema<IRoom>({
@@ -14,8 +21,19 @@ const roomSchema = new Schema<IRoom>({
   ],
   messages: [
     {
-      type: mongoose.Schema.ObjectId,
-      ref: 'messages',
+      text: String,
+      from: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'users',
+      },
+      to: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'users',
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now(),
+      },
     },
   ],
 });

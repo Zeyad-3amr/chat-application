@@ -3,9 +3,9 @@ import * as http from 'http';
 import app from './app';
 import dotenv from 'dotenv';
 import * as socketio from 'socket.io';
-import Message from './model/Message';
 import { sendMessage } from './controllers/messageController';
 import { send } from 'process';
+import Room from './model/Room';
 
 const port = 8000;
 
@@ -25,10 +25,15 @@ const io: socketio.Server = new socketio.Server(server, {
 });
 
 io.on('connection', (socket) => {
-  console.log('USER Connected : ', socket.id);
+  // console.log(socket);
 
-  socket.on('send_message', (data) => {
-    socket.broadcast.emit('receive_message', data.message);
+  socket.on('join_room', (data) => {
+    socket.join(data);
+  });
+
+  socket.on('send_message', async (data) => {
+    socket.to(data.roomId).emit('receive_message', data.message);
+    // await Room.updateOne;
   });
 });
 

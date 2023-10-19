@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api/chat-application/user', userRouter);
-app.use('/api/chat-application/message', messageRouter);
+// app.use('/api/chat-application/message', messageRouter);
 app.use('/api/chat-application/room', roomRouter);
 
 app.use(errorHandler);

@@ -4,4 +4,4 @@ import { roomCheck } from '../controllers/roomController';
 
 export const router = express.Router();
 
-router.route('/roomCheck/:id').get(protect, roomCheck);
+router.route('/roomCheck/:userName').get(protect, roomCheck);

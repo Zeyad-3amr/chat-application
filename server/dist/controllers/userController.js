@@ -38,7 +38,6 @@ exports.signup = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
         password: req.body.password,
         confirmPassword: req.body.confirmPassword,
     });
-    console.log(newUser);
     createSendToken(newUser, 201, req, res);
 });
 exports.login = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
@@ -72,7 +71,6 @@ exports.protect = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
     }
     // 2) Verify Token
     const decoded = (await jwtVerifyPromisified(token, process.env.JWT_SECRET));
-    console.log(decoded);
     // 3) check if user exist
     const currentUser = (await User_1.default.findById(decoded.id));
     if (!currentUser) {

@@ -7,13 +7,11 @@ export interface UserProfileProps {
 
 export const UserProfile: FC<UserProfileProps> = ({ name }) => {
   return (
-    <div className={classes.container}>
-      <div className={classes.userDetails}>
-        <div className={classes.photo}></div>
-        <div className={classes.details}>
-          <p className={classes.userName}>{name}</p>
-          <p className={classes.userMessage}>hey</p>
-        </div>
+    <div className={classes.userDetails}>
+      <div className={classes.photo}></div>
+      <div className={classes.details}>
+        <p className={classes.userName}>{name}</p>
+        <p className={classes.userMessage}>hey</p>
       </div>
     </div>
   );

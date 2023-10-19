@@ -28,8 +28,13 @@ const messageSchema = new mongoose_1.Schema({
     text: {
         type: String,
     },
-    user: {
+    from: {
         type: mongoose_1.default.Schema.ObjectId,
+        ref: 'users',
+    },
+    to: {
+        type: mongoose_1.default.Schema.ObjectId,
+        ref: 'users',
     },
     createdAt: {
         type: Date,

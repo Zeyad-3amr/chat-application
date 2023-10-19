@@ -43,9 +43,12 @@ const io = new socketio.Server(server, {
     },
 });
 io.on('connection', (socket) => {
-    console.log('USER Connected : ', socket.id);
-    socket.on('send_message', (data) => {
-        socket.broadcast.emit('receive_message', data.message);
+    // console.log(socket);
+    socket.on('join_room', (data) => {
+        socket.join(data);
+    });
+    socket.on('send_message', async (data) => {
+        socket.to(data.roomId).emit('receive_message', data.message);
     });
 });
 server.listen(port, () => {

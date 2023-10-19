@@ -56,8 +56,6 @@ export const signup: RequestHandler = catchAsync(
       confirmPassword: req.body.confirmPassword,
     });
 
-    console.log(newUser);
-
     createSendToken(newUser, 201, req, res);
   }
 );
@@ -108,8 +106,6 @@ export const protect: RequestHandler = catchAsync(
       process.env.JWT_SECRET
     )) as DecodedToken;
 
-    console.log(decoded);
-
     // 3) check if user exist
     const currentUser = (await User.findById(decoded.id)) as IUser;
     if (!currentUser) {
@@ -121,6 +117,18 @@ export const protect: RequestHandler = catchAsync(
   }
 );
 
+export const getMe: RequestHandler = catchAsync(
+  async (req: CustomRequest, res: Response, next) => {
+    console.log(req.user);
+
+    const user = await User.findById(req.user?.id);
+
+    res.status(200).json({
+      status: 'success',
+      data: user,
+    });
+  }
+);
 export const getAllUsers: RequestHandler = catchAsync(
   async (req: CustomRequest, res: Response, next) => {
     const users = await User.find({ _id: { $ne: req.user?.id } }).select(
