@@ -3,8 +3,7 @@ import * as http from 'http';
 import app from './app';
 import dotenv from 'dotenv';
 import * as socketio from 'socket.io';
-import { sendMessage } from './controllers/messageController';
-import { send } from 'process';
+
 import Room from './model/Room';
 
 const port = 8000;
@@ -32,8 +31,19 @@ io.on('connection', (socket) => {
   });
 
   socket.on('send_message', async (data) => {
-    socket.to(data.roomId).emit('receive_message', data.message);
-    // await Room.updateOne;
+    console.log(data);
+
+    socket.to(data.roomId).emit('receive_message', data);
+
+    await Room.findByIdAndUpdate(data.roomId, {
+      $push: {
+        messages: {
+          text: `${data.text}`,
+          from: `${data.from}`,
+          to: `${data.to}`,
+        },
+      },
+    });
   });
 });
 

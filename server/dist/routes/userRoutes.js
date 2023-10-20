@@ -9,4 +9,5 @@ const userController_1 = require("../controllers/userController");
 exports.router = express_1.default.Router();
 exports.router.route('/signup').post(userController_1.signup);
 exports.router.route('/login').post(userController_1.login);
+exports.router.route('/getMe').get(userController_1.protect, userController_1.getMe);
 exports.router.route('/getAllUsers').get(userController_1.protect, userController_1.getAllUsers);

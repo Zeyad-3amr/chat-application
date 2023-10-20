@@ -31,6 +31,7 @@ const http = __importStar(require("http"));
 const app_1 = __importDefault(require("./app"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const socketio = __importStar(require("socket.io"));
+const Room_1 = __importDefault(require("./model/Room"));
 const port = 8000;
 dotenv_1.default.config();
 const mongoDB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
@@ -48,7 +49,17 @@ io.on('connection', (socket) => {
         socket.join(data);
     });
     socket.on('send_message', async (data) => {
-        socket.to(data.roomId).emit('receive_message', data.message);
+        console.log(data);
+        socket.to(data.roomId).emit('receive_message', data);
+        await Room_1.default.findByIdAndUpdate(data.roomId, {
+            $push: {
+                messages: {
+                    text: `${data.text}`,
+                    from: `${data.from}`,
+                    to: `${data.to}`,
+                },
+            },
+        });
     });
 });
 server.listen(port, () => {

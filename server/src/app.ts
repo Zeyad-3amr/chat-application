@@ -4,7 +4,6 @@ import morgan from 'morgan';
 import { router as userRouter } from './routes/userRoutes';
 import cookieParser from 'cookie-parser';
 import errorHandler from './controllers/errorController';
-import { router as messageRouter } from './routes/messageRoutes';
 import { router as roomRouter } from './routes/roomRoutes';
 
 const app = express();

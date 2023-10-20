@@ -4,32 +4,35 @@ import { AppError } from '../utils/appError';
 import { RequestHandler, Request, Response } from 'express';
 import { CustomRequest } from '../interfaces/customRequest';
 import Room from '../model/Room';
-import User from '../model/User';
 
 export const roomCheck: RequestHandler = catchAsync(
   async (req: CustomRequest, res: Response, next) => {
     let room;
     let statusCode: number = 200;
 
-    const receiver = await User.findOne({ userName: req.params.userName });
-
-    if (!receiver) {
-      return next(new AppError('No user Found with this id', 404));
-    }
-
     room = await Room.findOne({
-      users: { $size: 2, $all: [req.user?.id, receiver?.id] },
+      users: { $size: 2, $all: [req.user?.id, req.params.id] },
     }).populate({
       path: 'users',
     });
 
     if (!room) {
       room = await Room.create({
-        users: [req.user?.id, receiver?.id],
+        users: [req.user?.id, req.params?.id],
       });
       room = await room.populate({
         path: 'users',
       });
+      // room = await room.populate({
+      //   path: 'messages',
+      //   // model: 'User',
+      //   populate: [
+      //     {
+      //       path: 'from',
+      //     },
+      //   ],
+      // });
+
       statusCode = 201;
     }
 

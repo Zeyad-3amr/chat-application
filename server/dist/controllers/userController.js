@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllUsers = exports.protect = exports.login = exports.signup = void 0;
+exports.getAllUsers = exports.getMe = exports.protect = exports.login = exports.signup = void 0;
 const catchAsync_1 = require("../utils/catchAsync");
 const appError_1 = require("../utils/appError");
 const User_1 = __importDefault(require("../model/User"));
@@ -78,6 +78,15 @@ exports.protect = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
     }
     req.user = currentUser;
     next();
+});
+exports.getMe = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
+    var _a;
+    console.log(req.user);
+    const user = await User_1.default.findById((_a = req.user) === null || _a === void 0 ? void 0 : _a.id);
+    res.status(200).json({
+        status: 'success',
+        data: user,
+    });
 });
 exports.getAllUsers = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
     var _a;

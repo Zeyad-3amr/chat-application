@@ -29,7 +29,7 @@ export const LeftNav: FC<LeftNavProps> = () => {
       </div>
       <div className={classes.leftNav}>
         {allUsers.map((user) => (
-          <Link key={user._id} className={classes.link} to={`/${user.userName}  `}>
+          <Link key={user._id} className={classes.link} to={`/${user._id}  `}>
             <UserProfile name={user.name} />
           </Link>
         ))}

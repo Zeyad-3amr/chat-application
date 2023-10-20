@@ -5,31 +5,38 @@ import { Message } from './Message/Message';
 import { TypeField } from './TypeField/TypeField';
 import io from 'socket.io-client';
 import instance from '../../instance';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useUserIdStore } from '../../store/userStorage';
 
 export interface ChatRoomProps {}
 
 const socket = io('http://localhost:8000');
 
+interface IMessage {
+  text: string;
+  from: string;
+  to: string;
+  createdAt: string;
+}
+interface IMessages {
+  messages: IMessage[];
+}
+
 export const ChatRoom: FC<ChatRoomProps> = () => {
   const { to } = useParams();
   const [message, setMessage] = useState('');
   const from = useUserIdStore((state) => state.userProfile._id);
 
-  console.log(from);
-
-  const [messagesArray, setMessagesArray] = useState<
-    { message: string; type: boolean }[]
-  >([]);
+  const [messagesArray, setMessagesArray] = useState<IMessage[]>([]);
 
   const [roomId, setRoomId] = useState('');
 
   useEffect(() => {
     const roomHandler = async () => {
       const res = await instance.get(`/room/roomCheck/${to}`);
-      console.log(res.data.room);
       setRoomId(res.data.room._id);
+      const messages = res.data.room.messages;
+      setMessagesArray(messages);
 
       socket.emit('join_room', res.data.room._id);
     };
@@ -38,27 +45,32 @@ export const ChatRoom: FC<ChatRoomProps> = () => {
   }, [to]);
 
   useEffect(() => {
-    socket.on('receive_message', (data: string) => {
+    socket.on('receive_message', (data: IMessage) => {
       console.log(data);
-      setMessagesArray((prev) => [...prev, { message: data, type: false }]);
+      setMessagesArray((prev: any) => [...prev, { text: data.text, from: data.from }]);
     });
   }, [socket]);
 
   const sendMessageHandler = () => {
     if (message === '') return;
 
-    socket.emit('send_message', { message, roomId });
+    socket.emit('send_message', { text: message, roomId, from, to });
 
-    setMessagesArray((prev) => [...prev, { message, type: true }]);
-    console.log(message);
+    setMessagesArray((prev: any) => [...prev, { text: message, from }]);
   };
 
   return (
     <div className={classes.container}>
       <Header />
       <div className={classes.chatBody}>
-        {messagesArray.map((el) => (
-          <Message text={el.message} messageType={el.type} />
+        {messagesArray?.map((el: IMessage) => (
+          <>
+            {el.from !== from ? (
+              <Message text={el.text} messageType={false} />
+            ) : (
+              <Message text={el.text} messageType={true} />
+            )}
+          </>
         ))}
       </div>
 
