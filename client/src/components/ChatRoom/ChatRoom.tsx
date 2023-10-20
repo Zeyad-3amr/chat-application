@@ -5,8 +5,9 @@ import { Message } from './Message/Message';
 import { TypeField } from './TypeField/TypeField';
 import io from 'socket.io-client';
 import instance from '../../instance';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useUserIdStore } from '../../store/userStorage';
+import { LinearProgress } from '@mui/material';
 
 export interface ChatRoomProps {}
 
@@ -18,31 +19,29 @@ interface IMessage {
   to: string;
   createdAt: string;
 }
-interface IMessages {
-  messages: IMessage[];
-}
 
 export const ChatRoom: FC<ChatRoomProps> = () => {
-  const { to } = useParams();
+  const { receiverId } = useParams();
   const [message, setMessage] = useState('');
   const from = useUserIdStore((state) => state.userProfile._id);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [messagesArray, setMessagesArray] = useState<IMessage[]>([]);
-
   const [roomId, setRoomId] = useState('');
 
   useEffect(() => {
     const roomHandler = async () => {
-      const res = await instance.get(`/room/roomCheck/${to}`);
+      setIsLoading(true);
+      const res = await instance.get(`/room/roomCheck/${receiverId}`);
       setRoomId(res.data.room._id);
       const messages = res.data.room.messages;
       setMessagesArray(messages);
-
       socket.emit('join_room', res.data.room._id);
+      setIsLoading(false);
     };
 
     roomHandler();
-  }, [to]);
+  }, [receiverId]);
 
   useEffect(() => {
     socket.on('receive_message', (data: IMessage) => {
@@ -54,31 +53,41 @@ export const ChatRoom: FC<ChatRoomProps> = () => {
   const sendMessageHandler = () => {
     if (message === '') return;
 
-    socket.emit('send_message', { text: message, roomId, from, to });
+    socket.emit('send_message', { text: message, roomId, from, to: receiverId });
 
     setMessagesArray((prev: any) => [...prev, { text: message, from }]);
   };
 
   return (
     <div className={classes.container}>
-      <Header />
-      <div className={classes.chatBody}>
-        {messagesArray?.map((el: IMessage) => (
-          <>
-            {el.from !== from ? (
-              <Message text={el.text} messageType={false} />
-            ) : (
-              <Message text={el.text} messageType={true} />
-            )}
-          </>
-        ))}
-      </div>
+      {isLoading ? (
+        <div className={classes.loading}>
+          <h1>Loading...</h1>
+          <LinearProgress color="inherit" />
+        </div>
+      ) : (
+        <>
+          <Header />
 
-      <TypeField
-        setMessage={setMessage}
-        message={message}
-        sendMessageHandler={sendMessageHandler}
-      />
+          <div className={classes.chatBody}>
+            {messagesArray?.map((el: IMessage) => (
+              <>
+                {el.from !== from ? (
+                  <Message text={el.text} messageType={false} />
+                ) : (
+                  <Message text={el.text} messageType={true} />
+                )}
+              </>
+            ))}
+          </div>
+
+          <TypeField
+            setMessage={setMessage}
+            message={message}
+            sendMessageHandler={sendMessageHandler}
+          />
+        </>
+      )}
     </div>
   );
 };

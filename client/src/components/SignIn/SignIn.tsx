@@ -89,7 +89,7 @@ export const SignIn: FC<SignInProps> = (props) => {
 
       <p>
         Don't have account {''}
-        <Link to="/signup" className={classes.link}>
+        <Link to="/sign-up" className={classes.link}>
           Sign up ?
         </Link>
       </p>

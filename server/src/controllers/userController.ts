@@ -59,6 +59,17 @@ export const signup: RequestHandler = catchAsync(
     createSendToken(newUser, 201, req, res);
   }
 );
+const jwtVerifyPromisified = (token: string, secret: string) => {
+  return new Promise((resolve, reject) => {
+    verifyJWT(token, secret, {}, (err, payload) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(payload);
+      }
+    });
+  });
+};
 
 export const login: RequestHandler = catchAsync(
   async (req: CustomRequest<LoginBody>, res, next) => {
@@ -77,18 +88,6 @@ export const login: RequestHandler = catchAsync(
     createSendToken(user, 200, req, res);
   }
 );
-
-const jwtVerifyPromisified = (token: string, secret: string) => {
-  return new Promise((resolve, reject) => {
-    verifyJWT(token, secret, {}, (err, payload) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(payload);
-      }
-    });
-  });
-};
 
 export const protect: RequestHandler = catchAsync(
   async (req: CustomRequest, res: Response, next) => {
@@ -114,6 +113,20 @@ export const protect: RequestHandler = catchAsync(
     req.user = currentUser;
 
     next();
+  }
+);
+
+export const logout: RequestHandler = catchAsync(
+  async (req: Request, res: Response, next) => {
+    res.cookie('jwt', '', {
+      expires: new Date(Date.now() + 10 * 1000),
+      httpOnly: true,
+    });
+
+    res.status(200).json({
+      status: 'success',
+      message: 'logged out successfully',
+    });
   }
 );
 

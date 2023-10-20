@@ -39,10 +39,10 @@
   border-radius: 5rem;
   border: none;
   font-weight: bold;
-  width: 8%;
+  width: 5rem;
   &:hover {
     background-color: rgb(39, 255, 215);
-
+    transform: scale(1.1);
     cursor: pointer;
     border-bottom-left-radius: 0rem;
     transition: 0.3s;

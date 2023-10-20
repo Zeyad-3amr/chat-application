@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllUsers = exports.getMe = exports.protect = exports.login = exports.signup = void 0;
+exports.getAllUsers = exports.getMe = exports.logout = exports.protect = exports.login = exports.signup = void 0;
 const catchAsync_1 = require("../utils/catchAsync");
 const appError_1 = require("../utils/appError");
 const User_1 = __importDefault(require("../model/User"));
@@ -40,17 +40,6 @@ exports.signup = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
     });
     createSendToken(newUser, 201, req, res);
 });
-exports.login = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
-    const { email, password } = req.body;
-    if (!email || !password) {
-        return next(new appError_1.AppError('Please provide email or password!', 400));
-    }
-    const user = await User_1.default.findOne({ email }).select('+password');
-    if (!user || !(await user.correctPassword(password, user.password))) {
-        return next(new appError_1.AppError('incorrect email or password', 404));
-    }
-    createSendToken(user, 200, req, res);
-});
 const jwtVerifyPromisified = (token, secret) => {
     return new Promise((resolve, reject) => {
         (0, jsonwebtoken_1.verify)(token, secret, {}, (err, payload) => {
@@ -63,6 +52,17 @@ const jwtVerifyPromisified = (token, secret) => {
         });
     });
 };
+exports.login = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+        return next(new appError_1.AppError('Please provide email or password!', 400));
+    }
+    const user = await User_1.default.findOne({ email }).select('+password');
+    if (!user || !(await user.correctPassword(password, user.password))) {
+        return next(new appError_1.AppError('incorrect email or password', 404));
+    }
+    createSendToken(user, 200, req, res);
+});
 exports.protect = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
     // 1) check if token is there and if it exists
     let token = req.cookies.jwt;
@@ -78,6 +78,16 @@ exports.protect = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
     }
     req.user = currentUser;
     next();
+});
+exports.logout = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
+    res.cookie('jwt', '', {
+        expires: new Date(Date.now() + 10 * 1000),
+        httpOnly: true,
+    });
+    res.status(200).json({
+        status: 'success',
+        message: 'logged out successfully',
+    });
 });
 exports.getMe = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
     var _a;

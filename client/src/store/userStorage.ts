@@ -9,13 +9,13 @@ interface User {
 
 interface UserState {
   userProfile: User;
-  setUser: (userProfile: User) => void;
+  setUser: (userProfile: User | {}) => void;
 }
 
 export const useUserIdStore = create<UserState>((set) => ({
   userProfile: {} as User,
-  setUser: (userProfile) =>
+  setUser: (userProfile: User | {}) =>
     set({
-      userProfile: userProfile,
+      userProfile: userProfile as User,
     }),
 }));

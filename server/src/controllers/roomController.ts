@@ -23,15 +23,17 @@ export const roomCheck: RequestHandler = catchAsync(
       room = await room.populate({
         path: 'users',
       });
-      // room = await room.populate({
-      //   path: 'messages',
-      //   // model: 'User',
-      //   populate: [
-      //     {
-      //       path: 'from',
-      //     },
-      //   ],
-      // });
+      room = await room.populate({
+        path: 'messages',
+        populate: [
+          {
+            path: 'from',
+          },
+          {
+            path: 'to',
+          },
+        ],
+      });
 
       statusCode = 201;
     }
