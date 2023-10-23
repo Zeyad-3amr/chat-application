@@ -132,8 +132,6 @@ export const logout: RequestHandler = catchAsync(
 
 export const getMe: RequestHandler = catchAsync(
   async (req: CustomRequest, res: Response, next) => {
-    console.log(req.user);
-
     const user = await User.findById(req.user?.id);
 
     res.status(200).json({

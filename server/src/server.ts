@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import * as socketio from 'socket.io';
 
 import Room from './model/Room';
+import { IUser } from './model/User';
 
 const port = 8000;
 
@@ -23,16 +24,25 @@ const io: socketio.Server = new socketio.Server(server, {
   },
 });
 
-io.on('connection', (socket) => {
-  // console.log(socket);
+let users: IUser[] = [];
 
+io.on('connection', (socket) => {
   socket.on('join_room', (data) => {
     socket.join(data);
   });
 
-  socket.on('send_message', async (data) => {
-    console.log(data);
+  socket.on('online', async (data) => {
+    users.push(data);
+    io.emit('online_users', users);
+  });
 
+  socket.on('logout', async (data) => {
+    console.log(data);
+    users = users.filter((el) => el._id !== data._id);
+    io.emit('offline', users);
+  });
+
+  socket.on('send_message', async (data) => {
     socket.to(data.roomId).emit('receive_message', data);
 
     await Room.findByIdAndUpdate(data.roomId, {

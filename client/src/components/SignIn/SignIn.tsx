@@ -6,6 +6,10 @@ import { RiChatSmileFill } from 'react-icons/ri';
 import instance from '../../instance';
 import { useUserIdStore } from '../../store/userStorage';
 import { LinearProgress } from '@mui/material';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:8000');
+
 export interface SignInProps {}
 
 export const SignIn: FC<SignInProps> = (props) => {
@@ -44,6 +48,8 @@ export const SignIn: FC<SignInProps> = (props) => {
         navigate('/', { replace: true });
       }
       const { user } = res.data.data;
+      socket.emit('online', user);
+
       setUser(user);
     } catch (err: any) {
       console.log(err.response.data.message);
@@ -79,6 +85,7 @@ export const SignIn: FC<SignInProps> = (props) => {
           onChange={passwordHandler}
         />
       </div>
+
       {isError && <p className={classes.errorMsg}>{errorMsg}</p>}
 
       <div className={classes.buttons}>

@@ -43,13 +43,21 @@ const io = new socketio.Server(server, {
         methods: ['GET', 'POST'],
     },
 });
+let users = [];
 io.on('connection', (socket) => {
-    // console.log(socket);
     socket.on('join_room', (data) => {
         socket.join(data);
     });
-    socket.on('send_message', async (data) => {
+    socket.on('online', async (data) => {
+        users.push(data);
+        io.emit('online_users', users);
+    });
+    socket.on('logout', async (data) => {
         console.log(data);
+        users = users.filter((el) => el._id !== data._id);
+        io.emit('offline', users);
+    });
+    socket.on('send_message', async (data) => {
         socket.to(data.roomId).emit('receive_message', data);
         await Room_1.default.findByIdAndUpdate(data.roomId, {
             $push: {

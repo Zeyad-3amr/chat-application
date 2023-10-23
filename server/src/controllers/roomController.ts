@@ -20,24 +20,23 @@ export const roomCheck: RequestHandler = catchAsync(
       room = await Room.create({
         users: [req.user?.id, req.params?.id],
       });
-      room = await room.populate({
-        path: 'users',
-      });
-      room = await room.populate({
-        path: 'messages',
-        populate: [
-          {
-            path: 'from',
-          },
-          {
-            path: 'to',
-          },
-        ],
-      });
 
       statusCode = 201;
     }
-
+    room = await room.populate({
+      path: 'users',
+    });
+    // room = await room.populate({
+    //   path: 'messages',
+    //   populate: [
+    //     {
+    //       path: 'from',
+    //     },
+    //     {
+    //       path: 'to',
+    //     },
+    //   ],
+    // });
     res.status(statusCode).json({
       status: 'success',
       room,

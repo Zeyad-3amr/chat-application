@@ -10,7 +10,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
 }: ProtectedRouteProps) => {
   const user = useUserIdStore((state) => state.userProfile);
-  console.log(user);
   if (!user?._id) {
     return <Navigate to="/sign-in" />;
   }

@@ -18,7 +18,6 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const user = useUserIdStore((state) => state.userProfile);
   const setUser = useUserIdStore((state) => state.setUser);
-
   useEffect(() => {
     const fetchUserHandler = async () => {
       try {
@@ -43,35 +42,35 @@ const App: React.FC = () => {
         </div>
       ) : (
         <Routes>
-          {!user._id ? (
-            <>
-              <Route path="/sign-in" element={<SignIn />} />
-              <Route path="/sign-up" element={<SignUp />} />
-            </>
-          ) : null}
+          {/* {!user._id ? ( */}
+          <>
+            <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/sign-up" element={<SignUp />} />
+          </>
+          {/* ) : null} */}
 
           <Route
             element={
-              <ProtectedRoute>
-                <LeftNavLayout />
-              </ProtectedRoute>
+              // <ProtectedRoute>
+              // </ProtectedRoute>
+              <LeftNavLayout />
             }
           >
             <Route
               path="/"
               index={true}
               element={
-                <ProtectedRoute>
-                  <WelcomeScreen />
-                </ProtectedRoute>
+                // <ProtectedRoute>
+                // </ProtectedRoute>
+                <WelcomeScreen />
               }
             />
             <Route
               path="/user/:receiverId"
               element={
-                <ProtectedRoute>
-                  <ChatRoom />
-                </ProtectedRoute>
+                // <ProtectedRoute>
+                // </ProtectedRoute>
+                <ChatRoom />
               }
             />
             <Route path="*" element={<Navigate to="/" />} />

@@ -91,7 +91,6 @@ exports.logout = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
 });
 exports.getMe = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
     var _a;
-    console.log(req.user);
     const user = await User_1.default.findById((_a = req.user) === null || _a === void 0 ? void 0 : _a.id);
     res.status(200).json({
         status: 'success',

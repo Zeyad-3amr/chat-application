@@ -25,7 +25,7 @@ export const ChatRoom: FC<ChatRoomProps> = () => {
   const [message, setMessage] = useState('');
   const from = useUserIdStore((state) => state.userProfile._id);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [receiver, setReceiver] = useState<string>('');
   const [messagesArray, setMessagesArray] = useState<IMessage[]>([]);
   const [roomId, setRoomId] = useState('');
 
@@ -34,8 +34,12 @@ export const ChatRoom: FC<ChatRoomProps> = () => {
       setIsLoading(true);
       const res = await instance.get(`/room/roomCheck/${receiverId}`);
       setRoomId(res.data.room._id);
-      const messages = res.data.room.messages;
-      setMessagesArray(messages);
+
+      setMessagesArray(res.data.room.messages);
+
+      const [_id] = res.data.room.users.filter((el: any) => el._id === receiverId);
+
+      setReceiver(_id.name);
       socket.emit('join_room', res.data.room._id);
       setIsLoading(false);
     };
@@ -45,7 +49,6 @@ export const ChatRoom: FC<ChatRoomProps> = () => {
 
   useEffect(() => {
     socket.on('receive_message', (data: IMessage) => {
-      console.log(data);
       setMessagesArray((prev: any) => [...prev, { text: data.text, from: data.from }]);
     });
   }, [socket]);
@@ -67,7 +70,7 @@ export const ChatRoom: FC<ChatRoomProps> = () => {
         </div>
       ) : (
         <>
-          <Header />
+          <Header name={receiver} />
 
           <div className={classes.chatBody}>
             {messagesArray?.map((el: IMessage) => (

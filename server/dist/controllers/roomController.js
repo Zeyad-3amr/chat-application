@@ -19,22 +19,22 @@ exports.roomCheck = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
         room = await Room_1.default.create({
             users: [(_b = req.user) === null || _b === void 0 ? void 0 : _b.id, (_c = req.params) === null || _c === void 0 ? void 0 : _c.id],
         });
-        room = await room.populate({
-            path: 'users',
-        });
-        room = await room.populate({
-            path: 'messages',
-            populate: [
-                {
-                    path: 'from',
-                },
-                {
-                    path: 'to',
-                },
-            ],
-        });
         statusCode = 201;
     }
+    room = await room.populate({
+        path: 'users',
+    });
+    // room = await room.populate({
+    //   path: 'messages',
+    //   populate: [
+    //     {
+    //       path: 'from',
+    //     },
+    //     {
+    //       path: 'to',
+    //     },
+    //   ],
+    // });
     res.status(statusCode).json({
         status: 'success',
         room,
