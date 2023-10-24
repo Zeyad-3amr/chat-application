@@ -32,13 +32,15 @@ io.on('connection', (socket) => {
   });
 
   socket.on('online', async (data) => {
+    console.log(data);
+
     users.push(data);
     io.emit('online_users', users);
   });
 
   socket.on('logout', async (data) => {
     console.log(data);
-    users = users.filter((el) => el._id !== data._id);
+    users = users.filter((el) => el !== data);
     io.emit('offline', users);
   });
 

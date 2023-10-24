@@ -21,10 +21,11 @@ const socket = io('http://localhost:8000');
 export const LeftNav: FC<LeftNavProps> = () => {
   const navigate = useNavigate();
   const [allUsers, setAllUsers] = useState<User[]>([]);
-  const setUser = useUserIdStore((state) => state.setUser);
-  const user = useUserIdStore((state) => state.userProfile);
   const [onlineUsers, setOnlineUsers] = useState<User[]>([]);
-  const [status, setStatus] = useState(false);
+
+  const user = useUserIdStore((state) => state.userProfile);
+  const setUser = useUserIdStore((state) => state.setUser);
+  const removeOnlineUser = useUserIdStore((state) => state.removeOnlineUser);
 
   useEffect(() => {
     const fetchAllUsers = async () => {
@@ -35,19 +36,20 @@ export const LeftNav: FC<LeftNavProps> = () => {
   }, []);
 
   useEffect(() => {
-    socket.on('online_users', (data: User[]) => {
+    socket.on('online_users', (data: any) => {
       setOnlineUsers(data);
     });
     socket.on('offline', (data) => {
       setOnlineUsers(data);
     });
-    socket.emit('online', user);
+    socket.emit('online', user._id);
   }, [socket]);
 
   const logOutHandler = async () => {
     const res = await instance.post('/user/logout');
     if (res.data.status === 'success') {
-      socket.emit('logout', user);
+      socket.emit('logout', user._id);
+      removeOnlineUser(user._id);
       setUser({});
       navigate('/sign-in', { replace: true });
     }
@@ -64,39 +66,12 @@ export const LeftNav: FC<LeftNavProps> = () => {
           {allUsers.map((user) => (
             <Link key={user._id} className={classes.link} to={`user/${user._id}  `}>
               <UserProfile
+                id={user._id}
                 name={user.name}
-                status={onlineUsers.some((el) => user._id === el._id)}
+                status={onlineUsers.some((el: any) => user._id === el)}
               />
             </Link>
           ))}
-          <Link key={user._id} className={classes.link} to={`user/${user._id}  `}>
-            <UserProfile
-              name={'zeyad'}
-              // status={onlineUsers.some((el) => user._id === el._id)}
-              status={true}
-            />
-          </Link>
-          <Link key={user._id} className={classes.link} to={`user/${user._id}  `}>
-            <UserProfile
-              name={'zeyad'}
-              // status={onlineUsers.some((el) => user._id === el._id)}
-              status={false}
-            />
-          </Link>
-          <Link key={user._id} className={classes.link} to={`user/${user._id}  `}>
-            <UserProfile
-              name={'zeyad'}
-              // status={onlineUsers.some((el) => user._id === el._id)}
-              status={false}
-            />
-          </Link>
-          <Link key={user._id} className={classes.link} to={`user/${user._id}  `}>
-            <UserProfile
-              name={'zeyad'}
-              // status={onlineUsers.some((el) => user._id === el._id)}
-              status={true}
-            />
-          </Link>
         </div>
       </div>
 

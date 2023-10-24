@@ -7,7 +7,6 @@ exports.getAllUsers = exports.getMe = exports.logout = exports.protect = exports
 const catchAsync_1 = require("../utils/catchAsync");
 const appError_1 = require("../utils/appError");
 const User_1 = __importDefault(require("../model/User"));
-// import jwt, { JwtPayload } from 'jsonwebtoken';
 const jsonwebtoken_1 = require("jsonwebtoken");
 const signToken = (id) => {
     return (0, jsonwebtoken_1.sign)({ id }, process.env.JWT_SECRET, {

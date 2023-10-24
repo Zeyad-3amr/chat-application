@@ -26,20 +26,14 @@ export const roomCheck: RequestHandler = catchAsync(
     room = await room.populate({
       path: 'users',
     });
-    // room = await room.populate({
-    //   path: 'messages',
-    //   populate: [
-    //     {
-    //       path: 'from',
-    //     },
-    //     {
-    //       path: 'to',
-    //     },
-    //   ],
-    // });
+
     res.status(statusCode).json({
       status: 'success',
       room,
     });
   }
+);
+
+export const getChats: RequestHandler = catchAsync(
+  async (req: CustomRequest, res: Response, next) => {}
 );

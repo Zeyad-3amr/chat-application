@@ -28,6 +28,7 @@ export const ChatRoom: FC<ChatRoomProps> = () => {
   const [receiver, setReceiver] = useState<string>('');
   const [messagesArray, setMessagesArray] = useState<IMessage[]>([]);
   const [roomId, setRoomId] = useState('');
+  const removeOnlineUser = useUserIdStore((state) => state.removeOnlineUser);
 
   useEffect(() => {
     const roomHandler = async () => {
@@ -59,6 +60,7 @@ export const ChatRoom: FC<ChatRoomProps> = () => {
     socket.emit('send_message', { text: message, roomId, from, to: receiverId });
 
     setMessagesArray((prev: any) => [...prev, { text: message, from }]);
+    setMessage('');
   };
 
   return (
@@ -70,7 +72,7 @@ export const ChatRoom: FC<ChatRoomProps> = () => {
         </div>
       ) : (
         <>
-          <Header name={receiver} />
+          <Header key={receiverId} name={receiver} id={receiverId as string} />
 
           <div className={classes.chatBody}>
             {messagesArray?.map((el: IMessage) => (

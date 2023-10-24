@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.roomCheck = void 0;
+exports.getChats = exports.roomCheck = void 0;
 const catchAsync_1 = require("../utils/catchAsync");
 const Room_1 = __importDefault(require("../model/Room"));
 exports.roomCheck = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
@@ -24,19 +24,9 @@ exports.roomCheck = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
     room = await room.populate({
         path: 'users',
     });
-    // room = await room.populate({
-    //   path: 'messages',
-    //   populate: [
-    //     {
-    //       path: 'from',
-    //     },
-    //     {
-    //       path: 'to',
-    //     },
-    //   ],
-    // });
     res.status(statusCode).json({
         status: 'success',
         room,
     });
 });
+exports.getChats = (0, catchAsync_1.catchAsync)(async (req, res, next) => { });

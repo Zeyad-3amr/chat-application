@@ -8,7 +8,11 @@ export interface TypeFieldProps {
   sendMessageHandler: VoidFunction;
 }
 
-export const TypeField: FC<TypeFieldProps> = ({ setMessage, sendMessageHandler }) => {
+export const TypeField: FC<TypeFieldProps> = ({
+  setMessage,
+  sendMessageHandler,
+  message,
+}) => {
   const messageHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.currentTarget.value);
   };
@@ -19,6 +23,7 @@ export const TypeField: FC<TypeFieldProps> = ({ setMessage, sendMessageHandler }
         className={classes.typeArea}
         placeholder="Type a message"
         maxRows={3}
+        value={message}
         onChange={messageHandler}
       />
 

@@ -42,35 +42,35 @@ const App: React.FC = () => {
         </div>
       ) : (
         <Routes>
-          {/* {!user._id ? ( */}
-          <>
-            <Route path="/sign-in" element={<SignIn />} />
-            <Route path="/sign-up" element={<SignUp />} />
-          </>
-          {/* ) : null} */}
+          {!user._id ? (
+            <>
+              <Route path="/sign-in" element={<SignIn />} />
+              <Route path="/sign-up" element={<SignUp />} />
+            </>
+          ) : null}
 
           <Route
             element={
-              // <ProtectedRoute>
-              // </ProtectedRoute>
-              <LeftNavLayout />
+              <ProtectedRoute>
+                <LeftNavLayout />
+              </ProtectedRoute>
             }
           >
             <Route
               path="/"
               index={true}
               element={
-                // <ProtectedRoute>
-                // </ProtectedRoute>
-                <WelcomeScreen />
+                <ProtectedRoute>
+                  <WelcomeScreen />
+                </ProtectedRoute>
               }
             />
             <Route
               path="/user/:receiverId"
               element={
-                // <ProtectedRoute>
-                // </ProtectedRoute>
-                <ChatRoom />
+                <ProtectedRoute>
+                  <ChatRoom />
+                </ProtectedRoute>
               }
             />
             <Route path="*" element={<Navigate to="/" />} />

@@ -3,15 +3,9 @@ import { AppError } from '../utils/appError';
 import { RequestHandler, Request, Response } from 'express';
 import { CustomRequest } from '../interfaces/customRequest';
 import User, { IUser } from '../model/User';
-import {
-  DecodedToken,
-  LoginBody,
-  ProtectBody,
-  SignupBody,
-} from '../interfaces/userController';
+import { DecodedToken, LoginBody, SignupBody } from '../interfaces/userController';
+import Room from '../model/Room';
 
-import { promisify } from 'util';
-// import jwt, { JwtPayload } from 'jsonwebtoken';
 import { sign, verify as verifyJWT } from 'jsonwebtoken';
 
 const signToken = (id: string) => {
@@ -145,6 +139,7 @@ export const getAllUsers: RequestHandler = catchAsync(
     const users = await User.find({ _id: { $ne: req.user?.id } }).select(
       '-password -__v'
     );
+
     res.status(200).json({
       status: 'success',
       data: users,
