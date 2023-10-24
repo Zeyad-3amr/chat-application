@@ -1,14 +1,11 @@
 .container {
   border-radius: 1rem;
-  /* background-color: #364044; */
   background-color: #000000c7;
 
   padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 1px 1px 10px 0px rgba(255, 0, 0, 0.489);
-  box-shadow: 1px 1px 10px 0px rgba(0, 255, 208, 0.489);
 }
 .typeArea {
   width: 90%;

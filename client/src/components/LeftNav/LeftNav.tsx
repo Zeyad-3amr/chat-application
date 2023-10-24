@@ -14,7 +14,7 @@ interface User {
   userName: string;
   name: string;
   email: string;
-  online: boolean;
+  lastMessage: string;
 }
 const socket = io('http://localhost:8000');
 
@@ -22,10 +22,8 @@ export const LeftNav: FC<LeftNavProps> = () => {
   const navigate = useNavigate();
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [onlineUsers, setOnlineUsers] = useState<User[]>([]);
-
   const user = useUserIdStore((state) => state.userProfile);
   const setUser = useUserIdStore((state) => state.setUser);
-  const removeOnlineUser = useUserIdStore((state) => state.removeOnlineUser);
 
   useEffect(() => {
     const fetchAllUsers = async () => {
@@ -49,7 +47,6 @@ export const LeftNav: FC<LeftNavProps> = () => {
     const res = await instance.post('/user/logout');
     if (res.data.status === 'success') {
       socket.emit('logout', user._id);
-      removeOnlineUser(user._id);
       setUser({});
       navigate('/sign-in', { replace: true });
     }

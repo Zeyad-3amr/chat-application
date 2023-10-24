@@ -35,5 +35,19 @@ export const roomCheck: RequestHandler = catchAsync(
 );
 
 export const getChats: RequestHandler = catchAsync(
-  async (req: CustomRequest, res: Response, next) => {}
+  async (req: CustomRequest, res: Response, next) => {
+    const rooms = await Room.find().select({
+      messages: { $slice: -1 },
+      users: 0,
+      _id: 0,
+      __v: 0,
+    });
+
+    const data = rooms.flatMap((el) => el.messages);
+
+    res.status(200).json({
+      status: 'success',
+      data,
+    });
+  }
 );

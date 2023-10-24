@@ -1,11 +1,14 @@
-.header {
+.headerOn,
+.headerOff {
   display: flex;
   flex-direction: column;
   background-color: #000000c7;
   border-radius: 1rem;
   padding: 0.5rem;
-  box-shadow: 1px 1px 10px 0px rgba(255, 0, 0, 0.489);
   box-shadow: 1px 1px 10px 0px rgba(0, 255, 208, 0.489);
+}
+.headerOff {
+  box-shadow: 1px 1px 10px 0px rgba(255, 0, 0, 0.489);
 }
 .name {
   color: white;

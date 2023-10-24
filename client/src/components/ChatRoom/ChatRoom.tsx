@@ -28,7 +28,6 @@ export const ChatRoom: FC<ChatRoomProps> = () => {
   const [receiver, setReceiver] = useState<string>('');
   const [messagesArray, setMessagesArray] = useState<IMessage[]>([]);
   const [roomId, setRoomId] = useState('');
-  const removeOnlineUser = useUserIdStore((state) => state.removeOnlineUser);
 
   useEffect(() => {
     const roomHandler = async () => {
@@ -50,6 +49,7 @@ export const ChatRoom: FC<ChatRoomProps> = () => {
 
   useEffect(() => {
     socket.on('receive_message', (data: IMessage) => {
+      console.log(data);
       setMessagesArray((prev: any) => [...prev, { text: data.text, from: data.from }]);
     });
   }, [socket]);

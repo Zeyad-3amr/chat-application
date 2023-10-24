@@ -13,7 +13,7 @@ export const Header: FC<HeaderProps> = ({ name, id }) => {
 
   return (
     <div>
-      <div className={classes.header}>
+      <div className={status ? classes.headerOn : classes.headerOff}>
         <p className={classes.name}>{name}</p>
         {status ? (
           <p className={classes.status}>online</p>

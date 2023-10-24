@@ -9,3 +9,4 @@ const userController_1 = require("../controllers/userController");
 const roomController_1 = require("../controllers/roomController");
 exports.router = express_1.default.Router();
 exports.router.route('/roomCheck/:id').get(userController_1.protect, roomController_1.roomCheck);
+exports.router.route('/getChats').get(userController_1.protect, roomController_1.getChats);

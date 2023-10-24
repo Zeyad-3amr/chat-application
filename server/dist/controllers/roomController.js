@@ -29,4 +29,16 @@ exports.roomCheck = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
         room,
     });
 });
-exports.getChats = (0, catchAsync_1.catchAsync)(async (req, res, next) => { });
+exports.getChats = (0, catchAsync_1.catchAsync)(async (req, res, next) => {
+    const rooms = await Room_1.default.find().select({
+        messages: { $slice: -1 },
+        users: 0,
+        _id: 0,
+        __v: 0,
+    });
+    const data = rooms.flatMap((el) => el.messages);
+    res.status(200).json({
+        status: 'success',
+        data,
+    });
+});
