@@ -1,2 +1,2 @@
 *.env
-enviroment.d.ts
+.enviroment.d.ts
