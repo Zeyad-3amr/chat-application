@@ -30,3 +30,8 @@ h1,
 h2 {
   color: white;
 }
+@media (max-width: 900px) {
+  .container {
+    display: none;
+  }
+}

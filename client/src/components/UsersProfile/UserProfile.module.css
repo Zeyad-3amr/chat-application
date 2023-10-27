@@ -3,6 +3,7 @@
   padding: 1rem;
   align-items: center;
 }
+
 .userDetailsOn,
 .userDetailsOff {
   display: flex;
@@ -28,30 +29,36 @@
   }
   transition: ease-out 0.2s;
 }
+
 .userDetailsOn {
   box-shadow: 1px 1px 10px 0px rgba(0, 255, 208, 0.489);
 }
+
 .userDetailsOff {
   box-shadow: 1px 1px 10px 0px rgba(255, 0, 0, 0.489);
   &:hover {
     background-color: rgba(255, 48, 48, 0.649);
   }
 }
+
 .photo {
   background-color: rgb(69, 69, 69);
   padding: 2rem;
   border-radius: 5rem;
 }
+
 .details {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
+
 .userName {
   margin: 0;
   font-weight: bold;
   color: white;
 }
+
 .userMessage {
   margin: 10px 0 0 0;
   color: rgb(197, 197, 197);
@@ -59,7 +66,5 @@
 
 .userStatus {
   display: flex;
-  /* justify-content: center; */
-  /* align-items: center; */
   gap: 2rem;
 }

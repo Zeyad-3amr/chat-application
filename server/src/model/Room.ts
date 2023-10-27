@@ -4,7 +4,7 @@ interface IMessage {
   text: string;
   from: mongoose.Schema.Types.ObjectId;
   to: mongoose.Schema.Types.ObjectId;
-  createdAt: Date;
+  createdAt: string;
 }
 
 interface IRoom {
@@ -31,8 +31,7 @@ const roomSchema = new Schema<IRoom>({
         ref: 'users',
       },
       createdAt: {
-        type: Date,
-        default: Date.now(),
+        type: String,
       },
     },
   ],

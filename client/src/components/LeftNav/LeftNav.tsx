@@ -23,6 +23,9 @@ export const LeftNav: FC<LeftNavProps> = () => {
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [onlineUsers, setOnlineUsers] = useState<User[]>([]);
   const user = useUserIdStore((state) => state.userProfile);
+  const update = useUserIdStore((state) => state.updatedUsers);
+  const addOnlineUser = useUserIdStore((state) => state.setOnlineUsers);
+
   const setUser = useUserIdStore((state) => state.setUser);
 
   useEffect(() => {
@@ -31,14 +34,16 @@ export const LeftNav: FC<LeftNavProps> = () => {
       setAllUsers(res.data.data);
     };
     fetchAllUsers();
-  }, []);
+  }, [update]);
 
   useEffect(() => {
     socket.on('online_users', (data: any) => {
       setOnlineUsers(data);
+      addOnlineUser(data);
     });
     socket.on('offline', (data) => {
       setOnlineUsers(data);
+      addOnlineUser(data);
     });
     socket.emit('online', user._id);
   }, [socket]);

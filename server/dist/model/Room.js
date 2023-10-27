@@ -43,8 +43,7 @@ const roomSchema = new mongoose_1.Schema({
                 ref: 'users',
             },
             createdAt: {
-                type: Date,
-                default: Date.now(),
+                type: String,
             },
         },
     ],

@@ -10,31 +10,33 @@ export interface UserProfileProps {
 }
 
 export const UserProfile: FC<UserProfileProps> = ({ name, status, id }) => {
-  const setOnlineUsers = useUserIdStore((state) => state.setOnlineUsers);
-  const removeOnlineUser = useUserIdStore((state) => state.removeOnlineUser);
-  const user = useUserIdStore((state) => state.userProfile);
-  const [lastMessage, setLastMessage] = useState('');
+  const user = useUserIdStore((state) => state.userProfile._id);
 
-  if (status) {
-    setOnlineUsers(id);
-  } else {
-    removeOnlineUser(id);
-  }
+  const lastMessage = useUserIdStore((state) => state.lastMessage);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     const fetchAllChats = async () => {
       const res = await instance.get('/room/getChats');
       const data: any = res.data.data;
+
       const message = data.find(
         (el: any) =>
-          (el.from === id && el.to === user._id) || (el.to === id && el.from === user._id)
+          (el.from === id && el.to === user) || (el.to === id && el.from === user)
       );
+
       if (message) {
-        setLastMessage(message.text);
+        setMessage(message.text);
       }
     };
     fetchAllChats();
   }, []);
+
+  useEffect(() => {
+    if (lastMessage.id === id) {
+      setMessage(lastMessage.message);
+    }
+  }, [lastMessage]);
 
   return (
     <div className={status ? classes.userDetailsOn : classes.userDetailsOff}>
@@ -42,7 +44,9 @@ export const UserProfile: FC<UserProfileProps> = ({ name, status, id }) => {
       <div className={classes.details}>
         <p className={classes.userName}>{name}</p>
 
-        <p className={classes.userMessage}>{lastMessage}</p>
+        <p className={classes.userMessage}>
+          {message.length > 30 ? message.slice(0, 30) + '...' : message}
+        </p>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import classes from './Header.module.css';
 import { useUserIdStore } from '../../../store/userStorage';
 
@@ -9,12 +9,14 @@ export interface HeaderProps {
 
 export const Header: FC<HeaderProps> = ({ name, id }) => {
   const currentOnlineUsers = useUserIdStore((state) => state.onlineUsers);
-  let status = currentOnlineUsers.find((el: any) => el === id);
+
+  const status = currentOnlineUsers.has(id);
 
   return (
     <div>
       <div className={status ? classes.headerOn : classes.headerOff}>
         <p className={classes.name}>{name}</p>
+
         {status ? (
           <p className={classes.status}>online</p>
         ) : (

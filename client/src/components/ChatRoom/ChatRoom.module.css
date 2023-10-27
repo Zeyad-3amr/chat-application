@@ -38,3 +38,14 @@
   width: 80%;
   color: rgba(93, 255, 228, 0.837);
 }
+@media (max-width: 900px) {
+  .container {
+    width: 90%;
+    height: 96vh;
+  }
+  .loading span {
+    width: 20rem;
+    margin-left: 2rem;
+    color: rgba(93, 255, 228, 0.837);
+  }
+}

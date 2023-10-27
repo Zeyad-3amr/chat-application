@@ -18,6 +18,7 @@ export const SignUp: FC<SignUpProps> = () => {
   const [isError, setIsError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const setUpdateUsers = useUserIdStore((state) => state.setUpdateUsers);
 
   let data = { name: '', userName: '', email: '', password: '', confirmPassword: '' };
 
@@ -49,6 +50,7 @@ export const SignUp: FC<SignUpProps> = () => {
     if (!email || !name || !password || !confirmPassword) {
       setIsError(true);
       console.log('error');
+      setUpdateUsers();
       setErrorMsg('Please provide all the fields !');
       return;
     }
@@ -70,6 +72,7 @@ export const SignUp: FC<SignUpProps> = () => {
         navigate('/', { replace: true });
       }
       const { user } = await res.data.data;
+      setUpdateUsers();
       setUser(user);
       // setIsLoading(false);
     } catch (err: any) {

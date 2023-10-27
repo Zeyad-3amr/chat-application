@@ -6,39 +6,47 @@ interface User {
   email: string;
   _id: string;
 }
-interface OnlineUser {
-  _id: string;
-}
 
 interface UserState {
   userProfile: User;
-  onlineUsers: OnlineUser[];
+  onlineUsers: Set<any>;
+  updatedUsers: boolean;
+  lastMessage: any;
 
-  removeOnlineUser: (id: string) => void;
-  setOnlineUsers: (id: string) => void;
+  setOnlineUsers: (id: []) => void;
   setUser: (userProfile: User | {}) => void;
+  setLastMessage: (message: any) => void;
+  setUpdateUsers: () => void;
 }
 
 export const useUserIdStore = create<UserState>((set) => ({
   userProfile: {} as User,
-  onlineUsers: [],
+  onlineUsers: new Set(),
+  updatedUsers: false,
+  lastMessage: {},
 
   setUser: (userProfile: User | {}) =>
     set({
       userProfile: userProfile as User,
     }),
 
-  setOnlineUsers: (id: string | any) => {
+  setOnlineUsers: (ids: []) => {
     set((state) => {
-      if (state.onlineUsers.includes(id)) {
-        return state;
-      }
-      return { onlineUsers: [...state.onlineUsers, id] };
+      ids.map((el) => state.onlineUsers.add(el));
+
+      return {
+        onlineUsers: new Set(ids),
+      };
     });
   },
-  removeOnlineUser: (id: string) => {
+  setLastMessage: (message: any) => {
+    set({
+      lastMessage: message,
+    });
+  },
+  setUpdateUsers: () => {
     set((state) => ({
-      onlineUsers: state.onlineUsers.filter((ids: any) => ids !== id),
+      updatedUsers: !state.updatedUsers,
     }));
   },
 }));

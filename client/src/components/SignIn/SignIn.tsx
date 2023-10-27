@@ -20,7 +20,6 @@ export const SignIn: FC<SignInProps> = (props) => {
   const [errorMsg, setErrorMsg] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const data = { email: '', password: '' };
-
   const setUser = useUserIdStore((state) => state.setUser);
 
   const emailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +50,6 @@ export const SignIn: FC<SignInProps> = (props) => {
       const { user } = res.data.data;
 
       socket.emit('online', user._id);
-
       setUser(user);
     } catch (err: any) {
       console.log(err.response.data.message);

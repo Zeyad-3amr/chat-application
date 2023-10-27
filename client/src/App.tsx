@@ -18,6 +18,7 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const user = useUserIdStore((state) => state.userProfile);
   const setUser = useUserIdStore((state) => state.setUser);
+
   useEffect(() => {
     const fetchUserHandler = async () => {
       try {
