@@ -24,8 +24,13 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api/chat-application/user', userRouter);
-// app.use('/api/chat-application/message', messageRouter);
 app.use('/api/chat-application/room', roomRouter);
+
+app.use(express.static(`${__dirname}/build`));
+
+app.all('*', (req, res, next) => {
+  res.sendFile(`${__dirname}/build/index.html`);
+});
 
 app.use(errorHandler);
 
