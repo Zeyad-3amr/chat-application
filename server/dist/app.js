@@ -10,6 +10,7 @@ const userRoutes_1 = require("./routes/userRoutes");
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const errorController_1 = __importDefault(require("./controllers/errorController"));
 const roomRoutes_1 = require("./routes/roomRoutes");
+const express_2 = __importDefault(require("express"));
 const app = (0, express_1.default)();
 app.enable('trust proxy');
 app.use((0, cors_1.default)({
@@ -26,5 +27,7 @@ app.use(express_1.default.static(`${__dirname}/build`));
 app.all('*', (req, res, next) => {
     res.sendFile(`${__dirname}/build/index.html`);
 });
+app.set('view engine', 'ejs');
+app.use(express_2.default);
 app.use(errorController_1.default);
 exports.default = app;

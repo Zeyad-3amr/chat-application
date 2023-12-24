@@ -11,7 +11,7 @@ import { LinearProgress } from '@mui/material';
 
 export interface ChatRoomProps {}
 
-const socket = io('http://localhost:8000');
+const socket = io('https://chatify-com.onrender.com/api/chat-application');
 
 interface IMessage {
   text: string;

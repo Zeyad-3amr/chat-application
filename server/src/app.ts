@@ -5,6 +5,7 @@ import { router as userRouter } from './routes/userRoutes';
 import cookieParser from 'cookie-parser';
 import errorHandler from './controllers/errorController';
 import { router as roomRouter } from './routes/roomRoutes';
+import expressLayouts from 'express';
 
 const app = express();
 
@@ -31,6 +32,8 @@ app.use(express.static(`${__dirname}/build`));
 app.all('*', (req, res, next) => {
   res.sendFile(`${__dirname}/build/index.html`);
 });
+app.set('view engine', 'ejs');
+app.use(expressLayouts);
 
 app.use(errorHandler);
 

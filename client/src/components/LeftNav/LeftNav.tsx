@@ -16,7 +16,7 @@ interface User {
   email: string;
   lastMessage: string;
 }
-const socket = io('http://localhost:8000');
+const socket = io('https://chatify-com.onrender.com/api/chat-application');
 
 export const LeftNav: FC<LeftNavProps> = () => {
   const navigate = useNavigate();

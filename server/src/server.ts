@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 import * as socketio from 'socket.io';
 
 import Room from './model/Room';
-import { IUser } from './model/User';
 
 const port = 8000;
 
